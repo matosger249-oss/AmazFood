@@ -1,0 +1,170 @@
+{
+  "entities": {
+    "Restaurant": {
+      "title": "Restaurant",
+      "description": "Representa um restaurante ou estabelecimento de comida cadastrado no portal.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nome": { "type": "string" },
+        "categoria": { "type": "string" },
+        "descricao": { "type": "string" },
+        "telefone": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "email": { "type": "string" },
+        "endereco": { "type": "string" },
+        "bairro": { "type": "string" },
+        "cidade": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "horario_funcionamento": { "type": "string" },
+        "status": { "type": "string" },
+        "plano": { "type": "string" },
+        "data_criacao": { "type": "string" },
+        "views": { "type": "number" },
+        "clicks": { "type": "number" }
+      },
+      "required": ["id", "nome", "categoria"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Representa um item do cardápio de algum restaurante do portal.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "restaurant_id": { "type": "string" },
+        "nome": { "type": "string" },
+        "descricao": { "type": "string" },
+        "preco": { "type": "number" },
+        "categoria": { "type": "string" },
+        "imagem": { "type": "string" },
+        "ativo": { "type": "boolean" }
+      },
+      "required": ["id", "restaurant_id", "nome", "preco"]
+    },
+    "Promotion": {
+      "title": "Promotion",
+      "description": "Representa uma oferta regional ou promoção lançada nas redes sociais por algum restaurante.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "restaurant_id": { "type": "string" },
+        "restaurant_nome": { "type": "string" },
+        "titulo": { "type": "string" },
+        "descricao": { "type": "string" },
+        "data_inicio": { "type": "string" },
+        "data_fim": { "type": "string" },
+        "ativa": { "type": "boolean" }
+      },
+      "required": ["id", "restaurant_id", "titulo"]
+    },
+    "DiscoveryCandidate": {
+      "title": "DiscoveryCandidate",
+      "description": "Candidatos descobertos de forma inteligente de posts no Instagram/bairros sem cadastro ativo.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nome": { "type": "string" },
+        "telefone": { "type": "string" },
+        "endereco": { "type": "string" },
+        "bairro": { "type": "string" },
+        "categoria": { "type": "string" },
+        "origem": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "nome"]
+    },
+    "VerificationLog": {
+      "title": "VerificationLog",
+      "description": "Registros de logs para verificação manual de informações desatualizadas sugeridas de forma inteligente.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "restaurant_id": { "type": "string" },
+        "restaurant_nome": { "type": "string" },
+        "data": { "type": "string" },
+        "campo": { "type": "string" },
+        "valor_antigo": { "type": "string" },
+        "valor_novo": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "restaurant_id", "campo", "valor_novo", "status"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "Acompanhamento do engajamento do usuário (cliques para o WhatsApp / Visualizações de cardápio).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "restaurant_id": { "type": "string" },
+        "restaurant_nome": { "type": "string" },
+        "origem": { "type": "string" },
+        "data": { "type": "string" }
+      },
+      "required": ["id", "restaurant_id", "origem", "data"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Avaliações e comentários reais feitos por curumins e cunhantãs aos restaurantes.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "restaurant_id": { "type": "string" },
+        "user_nome": { "type": "string" },
+        "nota": { "type": "number" },
+        "comentario": { "type": "string" },
+        "data_criacao": { "type": "string" }
+      },
+      "required": ["id", "restaurant_id", "nota"]
+    },
+    "ProductImage": {
+      "title": "ProductImage",
+      "description": "Fotos gastronômicas vinculadas a produtos com nível de confiança.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "product_id": { "type": "string" },
+        "image_url": { "type": "string" },
+        "source": { "type": "string", "enum": ["restaurant", "internet", "ai_generated"] },
+        "confidence": { "type": "number" },
+        "approved": { "type": "boolean" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["id", "product_id", "image_url", "source", "confidence", "approved"]
+    }
+  },
+  "firestore": {
+    "/restaurants/{restaurantId}": {
+      "schema": "Restaurant",
+      "description": "Collection de restaurantes cadastrados."
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Collection de pratos de cardápio vinculados aos restaurantes."
+    },
+    "/product_images/{imageId}": {
+      "schema": "ProductImage",
+      "description": "Fotos e mídias geradas ou enviadas vinculadas a produtos."
+    },
+    "/promotions/{promotionId}": {
+      "schema": "Promotion",
+      "description": "Promoções e ofertas ativas."
+    },
+    "/candidates/{candidateId}": {
+      "schema": "DiscoveryCandidate",
+      "description": "Candidatos descobertos inteligente."
+    },
+    "/verification_logs/{logId}": {
+      "schema": "VerificationLog",
+      "description": "Logs de verificação pendentes ou resolvidos."
+    },
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Engajamentos de leads registrados."
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Avaliações e opiniões de clientes."
+    }
+  }
+}

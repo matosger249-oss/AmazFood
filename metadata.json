@@ -1,0 +1,6 @@
+{
+  "name": "AmazFood - Toda a gastronomia da Amazônia em um só lugar",
+  "description": "Plataforma de alimentação econômica com IA para descoberta de estabelecimentos, com assistente de atendimento, extrator de cardápios e gerenciador de promoção.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
